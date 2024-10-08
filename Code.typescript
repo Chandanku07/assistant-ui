@@ -1,0 +1,48 @@
+// Define an interface for a Task
+interface Task {
+    id: number;
+    title: string;
+    completed: boolean;
+}
+
+// Class to manage tasks
+class TaskManager {
+    private tasks: Task[] = [];
+    private nextId: number = 1;
+
+    // Method to add a task
+    addTask(title: string): void {
+        const newTask: Task = {
+            id: this.nextId++,
+            title,
+            completed: false,
+        };
+        this.tasks.push(newTask);
+    }
+
+    // Method to mark a task as completed
+    completeTask(id: number): void {
+        const task = this.tasks.find(task => task.id === id);
+        if (task) {
+            task.completed = true;
+        } else {
+            console.log(`Task with id ${id} not found.`);
+        }
+    }
+
+    // Method to list all tasks
+    listTasks(): void {
+        this.tasks.forEach(task => {
+            console.log(`${task.id}: ${task.title} [${task.completed ? '✓' : '✗'}]`);
+        });
+    }
+}
+
+// Example usage
+const manager = new TaskManager();
+manager.addTask("Learn TypeScript");
+manager.addTask("Write a blog post");
+manager.listTasks();
+
+manager.completeTask(1);
+manager.listTasks();
